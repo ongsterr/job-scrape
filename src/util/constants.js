@@ -6,5 +6,6 @@ module.exports = Object.freeze({
     JOB_CLASS: '.e5uyowV._3rmJrof',
     JOB_TITLE: 'div._365Hwu1 > article:nth-child(INDEX)',
     JOB_DETAILS: 'div._365Hwu1 > article:nth-child(INDEX) > span.E6m4BZb',
+    JOB_CATEGORY: 'div._365Hwu1 > article:nth-child(INDEX) > div._1mzsMx5 > span.K1Fdmkw > span > span > strong > span > span',
     JOBS_NUM: '#SearchSummary > span > h1 > strong'
 })

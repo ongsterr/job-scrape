@@ -4,6 +4,7 @@ let jobSchema = new mongoose.Schema({
     title: String,
     company: String,
     description: String,
+    category: String,
     period: String,
     dateCrawled: Date
 });

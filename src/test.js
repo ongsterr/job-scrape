@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const constants = require('./src/util/constants.js');
+const constants = require('./util/constants.js');
 
 const jobTitle = 'Finance Analyst'
 const jobLocation = 'Melbourne'
@@ -18,9 +18,9 @@ async function run() {
         await page.click(constants.SEARCH);
         await page.waitFor(2000);
     
-    const testSelector = 'div._365Hwu1 > article:nth-child(2) > span.E6m4BZb'
+    const testSelector = 'div._365Hwu1 > article:nth-child(2) > div._1mzsMx5 > span.K1Fdmkw > span > span > strong > span > span'
     let test = await page.evaluate( sel => {
-        let test = document.querySelectorAll(sel)[1]
+        let test = document.querySelector(sel)
         return test.innerText
     }, testSelector)
     console.log(test)
