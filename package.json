@@ -2,7 +2,7 @@
   "name": "job-scraping",
   "version": "1.0.0",
   "description": "Scraping jobs using node and puppeteer",
-  "main": "index.js",
+  "main": "src/job-scrape.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "file-system": "^2.2.2",
+    "mongoose": "^5.1.4",
     "puppeteer": "^1.4.0"
   }
 }
