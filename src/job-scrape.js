@@ -102,7 +102,7 @@ async function insertJob(jobPost) {
     const DB_URL = 'mongodb://localhost/joblist'
     const connection = mongoose.connection
 
-    if (mongoose.connection.readyState === 0) {
+    if (connection.readyState === 0) {
         await mongoose.connect(DB_URL);
     }
 
