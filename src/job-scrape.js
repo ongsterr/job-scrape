@@ -1,15 +1,15 @@
 const puppeteer = require('puppeteer');
 const mongoose = require('mongoose');
 const EventEmitter = require('events');
-EventEmitter.defaultMaxListeners = 100;
+EventEmitter.defaultMaxListeners = 1000;
 
 const constants = require('./util/constants.js');
 const Job = require('./models/job');
 
 const jobTitle = 'Finance Analyst'
-const jobLocation = 'Perth'
+const jobLocation = ''
 const jobTitleLink = jobTitle.toLowerCase().split(' ').join('-')
-const searchUrl = `https://www.seek.com.au/${jobTitleLink}-jobs/in-${jobLocation}`
+const searchUrl = `https://www.seek.com.au/${jobTitleLink}-jobs/${jobLocation === '' ? '' : 'in-'+jobLocation}`
 
 async function run() {
     const browser = await puppeteer.launch({
