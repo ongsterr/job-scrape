@@ -1,11 +1,13 @@
 const puppeteer = require('puppeteer');
 const mongoose = require('mongoose');
+const EventEmitter = require('events');
+EventEmitter.defaultMaxListeners = 100;
 
 const constants = require('./util/constants.js');
 const Job = require('./models/job');
 
-const jobTitle = 'Junior Developer'
-const jobLocation = 'Melbourne'
+const jobTitle = 'Finance Analyst'
+const jobLocation = 'Perth'
 const jobTitleLink = jobTitle.toLowerCase().split(' ').join('-')
 const searchUrl = `https://www.seek.com.au/${jobTitleLink}-jobs/in-${jobLocation}`
 
@@ -42,6 +44,7 @@ async function run() {
             let titleSelector = constants.JOB_TITLE.replace('INDEX', i);
             let detailSelector = constants.JOB_DETAILS.replace('INDEX', i);
             let categorySelector = constants.JOB_CATEGORY.replace('INDEX', i);
+            let locationSelector = constants.JOB_LOCATION.replace('INDEX', i);
 
             let jobTitle = await page.evaluate(sel => {
                 let element = document.querySelector(sel)
@@ -63,6 +66,11 @@ async function run() {
                 return element ? element.innerText : null
             }, detailSelector)
 
+            let jobLocation = await page.evaluate(sel => {
+                let element = document.querySelector(sel)
+                return element ? element.innerText : null
+            }, locationSelector)
+
             let jobDays = await page.evaluate(sel => {
                 let element = document.querySelectorAll(sel)[1]
                 return element ? element.innerText : null
@@ -71,10 +79,11 @@ async function run() {
             console.log(jobTitle + '->' + jobCategory + '->' + jobCompany + '->' + jobDays)
 
             await insertJob({
+                description: jobDescription,
                 title: jobTitle,
                 company: jobCompany,
-                description: jobDescription,
                 category: jobCategory,
+                location: jobLocation,
                 period: jobDays,
                 dateCrawled: new Date()
             })
@@ -100,19 +109,18 @@ async function getNumPages(page) {
 
 async function insertJob(jobPost) {
     const DB_URL = 'mongodb://localhost/joblist'
-    const connection = mongoose.connection
 
-    if (connection.readyState === 0) {
+    if (mongoose.connection.readyState === 0) {
         await mongoose.connect(DB_URL);
     }
 
-    connection.on('connected', () => {
+    mongoose.connection.on('connected', () => {
         console.log('Establish connection to MongoDB')
     })
 
     // if a job entry exists, update the entry, don't insert
     let conditions = {
-        period: jobPost.period
+        description: jobPost.description
     }
 
     let options = {
@@ -123,6 +131,7 @@ async function insertJob(jobPost) {
 
     Job.findOneAndUpdate(conditions, jobPost, options, (err, result) => {
         if (err) throw err;
-        console.log('Job posted.')
+        // console.log(jobPost)
+        console.count('Job posted!')
     });
 }

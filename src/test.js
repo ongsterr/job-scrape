@@ -18,7 +18,7 @@ async function run() {
         await page.click(constants.SEARCH);
         await page.waitFor(2000);
     
-    const testSelector = 'div._365Hwu1 > article:nth-child(2) > div._1mzsMx5 > span.K1Fdmkw > span > span > strong > span > span'
+    const testSelector = 'div._365Hwu1 > article:nth-child(2) > div._1mzsMx5 > span.E6m4BZb > span > strong > span > a'
     let test = await page.evaluate( sel => {
         let test = document.querySelector(sel)
         return test.innerText

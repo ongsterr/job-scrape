@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
 let jobSchema = new mongoose.Schema({
+    description: String,
     title: String,
     company: String,
-    description: String,
     category: String,
+    location: String,
     period: String,
     dateCrawled: Date
 });
