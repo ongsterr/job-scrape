@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const mongoose = require('mongoose');
 const EventEmitter = require('events');
-EventEmitter.defaultMaxListeners = 1000;
+EventEmitter.defaultMaxListeners = 1000; // depends on number of items scraped
 
 const constants = require('./util/constants.js');
 const Job = require('./models/job');
