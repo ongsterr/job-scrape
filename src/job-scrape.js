@@ -6,7 +6,7 @@ EventEmitter.defaultMaxListeners = 1000; // depends on number of items scraped
 const constants = require('./util/constants.js');
 const Job = require('./models/job');
 
-const jobTitle = 'Junior Developer'
+const jobTitle = 'Graduate Developer'
 const jobLocation = ''
 const jobTitleLink = jobTitle.toLowerCase().split(' ').join('-')
 const searchUrl = `https://www.seek.com.au/${jobTitleLink}-jobs/${jobLocation === '' ? '' : 'in-'+jobLocation}`
@@ -82,6 +82,10 @@ async function run() {
                 if (jobTitle.toLowerCase().includes(type)) {
                     jobType.push(type);
                 }
+            }
+
+            if (jobType.length === 0) {
+                jobType.push('general')
             }
 
             console.log(jobTitle + '->' + jobLocation + '->' + jobCompany + '->' + jobDays)
