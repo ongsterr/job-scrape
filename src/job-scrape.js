@@ -6,7 +6,7 @@ EventEmitter.defaultMaxListeners = 1000; // depends on number of items scraped
 const constants = require('./util/constants.js');
 const Job = require('./models/job');
 
-const jobTitle = 'Finance Analyst'
+const jobTitle = 'Junior Developer'
 const jobLocation = ''
 const jobTitleLink = jobTitle.toLowerCase().split(' ').join('-')
 const searchUrl = `https://www.seek.com.au/${jobTitleLink}-jobs/${jobLocation === '' ? '' : 'in-'+jobLocation}`
@@ -76,11 +76,20 @@ async function run() {
                 return element ? element.innerText : null
             }, detailSelector)
 
-            console.log(jobTitle + '->' + jobCategory + '->' + jobCompany + '->' + jobDays)
+            const jobTypes = ['c#', 'c++', 'java', 'php', '.net', 'react', 'angular', 'devops', 'node', 'ruby on rails', 'wordpress', 'scala', 'front end', 'python', 'django', 'software'];
+            let jobType = [];
+            for (let type of jobTypes) {
+                if (jobTitle.toLowerCase().includes(type)) {
+                    jobType.push(type);
+                }
+            }
+
+            console.log(jobTitle + '->' + jobLocation + '->' + jobCompany + '->' + jobDays)
 
             await insertJob({
                 description: jobDescription,
                 title: jobTitle,
+                type: jobType,
                 company: jobCompany,
                 category: jobCategory,
                 location: jobLocation,
