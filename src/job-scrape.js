@@ -13,7 +13,7 @@ const searchUrl = `https://www.seek.com.au/${jobTitleLink}-jobs/${jobLocation ==
 
 async function run() {
     const browser = await puppeteer.launch({
-        executablePath: '/usr/bin/chromium-browser'
+        headless: false
     });
 
     const page = await browser.newPage();
